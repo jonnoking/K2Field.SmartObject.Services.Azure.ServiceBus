@@ -1,0 +1,1 @@
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\bin\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.exe.config

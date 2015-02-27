@@ -1,0 +1,11 @@
+﻿<Window x:Class="K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,28,0,0" Name="txtQueue" VerticalAlignment="Top" Width="243" />
+        <Button Content="Send" Height="23" HorizontalAlignment="Left" Margin="391,28,0,0" Name="btnSend" VerticalAlignment="Top" Width="75" Click="btnSend_Click" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,73,0,0" Name="txtMessage" VerticalAlignment="Top" Width="243" />
+        <Button Content="Get" Height="23" HorizontalAlignment="Left" Margin="391,118,0,0" Name="btnGet" VerticalAlignment="Top" Width="75" Click="btnGet_Click" />
+    </Grid>
+</Window>
