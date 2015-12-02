@@ -9,6 +9,7 @@ using SourceCode.SmartObjects.Services.ServiceSDK;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using System.Transactions;
+using System.IO;
 
 namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
 {
@@ -505,7 +506,8 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
                 BrokeredMessage msg;
                 if (inputs.Where(p => p.Name.Equals("body")).Count() > 0)
                 {
-                    msg = new BrokeredMessage(inputs.Where(p => p.Name.Equals("body")).First().Value.ToString());
+                    string msgBody = inputs.Where(p => p.Name.Equals("body")).First().Value.ToString();
+                    msg = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes(msgBody)));
                 }
                 else
                 {
