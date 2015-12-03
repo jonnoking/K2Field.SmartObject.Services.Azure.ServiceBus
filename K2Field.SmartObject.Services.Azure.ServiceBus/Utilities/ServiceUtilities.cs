@@ -22,6 +22,11 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Utilities
         }        
         public MessagingFactory GetMessagingFactory(long timeoutSeconds)
         {
+            if (!string.IsNullOrWhiteSpace(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString()))
+            {
+                return MessagingFactory.CreateFromConnectionString(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString());
+            }
+
             try
             {
                 MessagingFactorySettings mfSettings = new MessagingFactorySettings();
