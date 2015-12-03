@@ -19,7 +19,20 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Utilities
         {
             // Set local serviceBroker variable.
             this.serviceBroker = serviceBroker;
-        }        
+        }
+        
+        public EventHubClient GetEventHubClient(string eventHub)
+        {
+            if (!string.IsNullOrWhiteSpace(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString()))
+            {
+                return EventHubClient.CreateFromConnectionString(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString(), eventHub);
+            }
+            else
+            {
+                throw new Exception("Event Hub actions require connection string to be configured");
+            }
+        }
+
         public MessagingFactory GetMessagingFactory(long timeoutSeconds)
         {
             if (!string.IsNullOrWhiteSpace(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString()))

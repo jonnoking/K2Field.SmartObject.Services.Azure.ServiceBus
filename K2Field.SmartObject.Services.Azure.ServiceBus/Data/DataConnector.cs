@@ -1043,6 +1043,16 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
 
             #region Event Hub
 
+            #region Send Event Hub Message
+
+            if (serviceObject.Methods[0].Name.Equals("sendeventhubmessage"))
+            {
+                ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+                EventHub.SendEventHubMessage(inputs, required, returns, methodType, serviceObject);
+            }
+
+            #endregion Send Event Hub Message
+
             #region Load Event Hub
 
             if (serviceObject.Methods[0].Name.Equals("loadeventhub"))

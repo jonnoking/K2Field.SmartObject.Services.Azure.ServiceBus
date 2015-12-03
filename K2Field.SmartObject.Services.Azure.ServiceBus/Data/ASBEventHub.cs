@@ -7,6 +7,7 @@ using SourceCode.SmartObjects.Services.ServiceSDK.Objects;
 using SourceCode.SmartObjects.Services.ServiceSDK;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using System.IO;
 
 namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
 {
@@ -42,6 +43,7 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             {
                 EventHubObject.Properties.Add(prop);
             }
+            EventHubObject.Methods.Add(CreateSendEventHubMessage(EventHubProps));
             EventHubObject.Methods.Add(CreateLoadEventHub(EventHubProps));
             EventHubObject.Methods.Add(CreateListEventHubs(EventHubProps));
             EventHubObject.Methods.Add(CreateCreateEventHub(EventHubProps));
@@ -128,11 +130,45 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             pRDD.SoType = SoType.Memo;
             //pRDD.Type = Queue.RequiresDuplicateDetection.GetType().ToString();
             EventHubProperties.Add(pRDD);
-            
+
+
+            Property ehData = new Property();
+            ehData.Name = "data";
+            ehData.MetaData.DisplayName = "Data ";
+            ehData.SoType = SoType.Memo;
+            //ehData.Type = Queue.RequiresDuplicateDetection.GetType().ToString();
+            EventHubProperties.Add(ehData);
+
+
             EventHubProperties.AddRange(ASBStandard.GetStandardReturnProperties());
 
             return EventHubProperties;
         }
+
+        private Method CreateSendEventHubMessage(List<Property> EventHubProps)
+        {
+            Method SendEventHubMessage = new Method();
+            SendEventHubMessage.Name = "sendeventhubmessage";
+            SendEventHubMessage.MetaData.DisplayName = "Send Event Hub Message";
+            SendEventHubMessage.Type = MethodType.Read;
+            SendEventHubMessage.InputProperties.Add(EventHubProps.Where(p => p.Name == "eventhub").First());
+            SendEventHubMessage.Validation.RequiredProperties.Add(EventHubProps.Where(p => p.Name == "eventhub").First());
+            SendEventHubMessage.InputProperties.Add(EventHubProps.Where(p => p.Name == "data").First());
+            SendEventHubMessage.Validation.RequiredProperties.Add(EventHubProps.Where(p => p.Name == "data").First());
+
+            foreach (Property prop in ASBStandard.GetStandardInputProperties())
+            {
+                SendEventHubMessage.InputProperties.Add(prop);
+            }
+
+            SendEventHubMessage.ReturnProperties.Add(EventHubProps.Where(p => p.Name == "eventhub").First());
+            SendEventHubMessage.ReturnProperties.Add(EventHubProps.Where(p => p.Name == "data").First());
+            SendEventHubMessage.ReturnProperties.Add(EventHubProps.Where(p => p.Name == "responsestatus").First());
+            SendEventHubMessage.ReturnProperties.Add(EventHubProps.Where(p => p.Name == "responsestatusdescription").First());
+
+            return SendEventHubMessage;
+        }
+
 
         private Method CreateLoadEventHub(List<Property> EventHubProps)
         {
@@ -250,6 +286,96 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
         #endregion Definition
 
         #region Execution
+
+
+        public void SendEventHubMessage(Property[] inputs, RequiredProperties required, Property[] returns, MethodType methodType, ServiceObject serviceObject)
+        {
+            Utilities.ServiceUtilities serviceUtilities = new Utilities.ServiceUtilities(serviceBroker);
+            serviceObject.Properties.InitResultTable();
+            
+            EventHubClient Client = null;
+            EventData eventData = null;
+            try
+            {
+                string eventhubpath = string.Empty;
+                if (inputs.Length == 0)
+                {
+                    eventhubpath = serviceObject.MetaData.DisplayName;
+                }
+                else
+                {
+                    eventhubpath = inputs.Where(p => p.Name.Equals("eventhub")).First().Value.ToString();
+                }
+
+                if (inputs.Where(p => p.Name.Equals("data")).Count() > 0)
+                {
+                    string msgBody = inputs.Where(p => p.Name.Equals("data")).First().Value.ToString();
+                    eventData = new EventData(new MemoryStream(Encoding.UTF8.GetBytes(msgBody)));
+                }
+                else
+                {
+                    throw new Exception("Data is required to send an Event Hub Message");
+                }
+
+                Client = serviceUtilities.GetEventHubClient(eventhubpath);
+                Client.Send(eventData);
+
+
+                //foreach (Property prop in returns)
+                //{
+                //    switch (prop.Name)
+                //    {
+                //        case "createdat":
+                //            prop.Value = Client.CreatedAt;
+                //            break;
+                //        case "isreadonly":
+                //            prop.Value = Client.IsReadOnly;
+                //            break;
+                //        case "messageretentionindays":
+                //            prop.Value = Client.MessageRetentionInDays;
+                //            break;
+                //        case "partitioncount":
+                //            prop.Value = Client.PartitionCount;
+                //            break;
+                //        case "partitionids":
+                //            prop.Value = string.Join(",", Client.PartitionIds);
+                //            break;
+                //        case "path":
+                //            prop.Value = Client.Path;
+                //            break;
+                //        case "status":
+                //            prop.Value = Client.Status.ToString();
+                //            break;
+                //        case "updatedat":
+                //            prop.Value = Client.UpdatedAt;
+                //            break;
+                //        case "usermetadata":
+                //            prop.Value = Client.UserMetadata;
+                //            break;
+                //    }
+                //}
+
+                returns.Where(p => p.Name.Equals("eventhub")).First().Value = inputs.Where(p => p.Name.Equals("eventhub")).First().Value.ToString();
+                returns.Where(p => p.Name.Equals("data")).First().Value = inputs.Where(p => p.Name.Equals("data")).First().Value.ToString();
+                returns.Where(p => p.Name.Equals("responsestatus")).First().Value = ResponseStatus.Success;
+                returns.Where(p => p.Name.Equals("responsestatusdescription")).First().Value = "Event Hub message sent";
+            }
+            catch (Exception ex)
+            {
+                returns.Where(p => p.Name.Equals("responsestatus")).First().Value = ResponseStatus.Error;
+                returns.Where(p => p.Name.Equals("responsestatusdescription")).First().Value = ex.Message;
+            }
+            finally
+            {
+                try
+                {
+                    Client.Close();
+                }
+                catch { }
+                Client = null;
+            }
+            serviceObject.Properties.BindPropertiesToResultTable();
+        }
 
         public void LoadEventHub(Property[] inputs, RequiredProperties required, Property[] returns, MethodType methodType, ServiceObject serviceObject)
         {

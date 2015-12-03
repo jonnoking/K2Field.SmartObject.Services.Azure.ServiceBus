@@ -492,16 +492,6 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             Utilities.ServiceUtilities serviceUtilities = new Utilities.ServiceUtilities(serviceBroker);
             try
             {
-                MessagingFactory factory = factory = serviceUtilities.GetMessagingFactory(inputs.Where(p => p.Name.Equals("requesttimeout")).FirstOrDefault());
-                MessageSender MsgSender;
-                if (inputs.Where(p => p.Name.Equals("path")).Count() > 0)
-                {
-                    MsgSender = factory.CreateMessageSender(inputs.Where(p => p.Name.Equals("path")).First().Value.ToString());
-                }
-                else
-                {
-                    throw new Exception("Send Message Failed: No queue defined");
-                }
 
                 BrokeredMessage msg;
                 if (inputs.Where(p => p.Name.Equals("body")).Count() > 0)
@@ -571,6 +561,19 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
                     }
 
                 }
+
+
+                MessagingFactory factory = factory = serviceUtilities.GetMessagingFactory(inputs.Where(p => p.Name.Equals("requesttimeout")).FirstOrDefault());
+                MessageSender MsgSender;
+                if (inputs.Where(p => p.Name.Equals("path")).Count() > 0)
+                {
+                    MsgSender = factory.CreateMessageSender(inputs.Where(p => p.Name.Equals("path")).First().Value.ToString());
+                }
+                else
+                {
+                    throw new Exception("Send Message Failed: No queue defined");
+                }
+
 
                 MsgSender.Send(msg);
                 MsgSender.Close();
