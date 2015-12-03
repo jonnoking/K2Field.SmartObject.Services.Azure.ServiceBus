@@ -7,6 +7,7 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
 {
     public class ServiceConfigurationSettings
     {
+        public static readonly string ConnectionString = "ConnectionString";
         public static readonly string Namespace = "Namespace";
         public static readonly string Issuer = "Issuer";
         public static readonly string Key = "Key";

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ASBEventHub.cs" />
     <Compile Include="Data\ASBMessage.cs" />
     <Compile Include="Data\ASBQueue.cs" />
     <Compile Include="Data\ASBStandard.cs" />

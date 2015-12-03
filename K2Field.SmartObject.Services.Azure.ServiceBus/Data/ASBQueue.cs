@@ -371,8 +371,7 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             try
             {
                 namespaceManager = serviceUtilities.GetNamespaceManager(inputs.Where(p => p.Name.Equals("requesttimeout")).FirstOrDefault());
-                IEnumerable<QueueDescription> Qs = namespaceManager.GetQueues();
-
+                IEnumerable<QueueDescription> Qs = namespaceManager.GetQueues();                
 
                 foreach (QueueDescription Queue in Qs)
                 {

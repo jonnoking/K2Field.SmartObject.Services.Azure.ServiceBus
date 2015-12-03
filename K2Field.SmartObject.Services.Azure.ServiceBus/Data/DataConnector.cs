@@ -84,9 +84,11 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
         /// </summary>
         public void SetupConfiguration()
         {
-            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Namespace, true, "");
-            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Issuer, true, "");
-            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Key, true, "");
+            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.ConnectionString, true, "");
+
+            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Namespace, false, "");
+            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Issuer, false, "");
+            serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Key, false, "");
             serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.DynamicDiscovery, true, "false");
             serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Delimiter1, true, "|");
             serviceBroker.Service.ServiceConfiguration.Add(ServiceConfigurationSettings.Delimiter2, true, "#");
@@ -839,6 +841,9 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             ASBSubscription Subscription = new ASBSubscription(serviceBroker);
             Subscription.Create(ServiceBusObjectsFolder.Name);
 
+            ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+            EventHub.Create(ServiceBusObjectsFolder.Name);
+
             ASBMessage Message = new ASBMessage(serviceBroker);
             Message.Create(ServiceBusObjectsFolder.Name);
             
@@ -1034,6 +1039,52 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             #endregion List Subscriptions
 
             #endregion Subscription
+
+
+            #region Event Hub
+
+            #region Load Event Hub
+
+            if (serviceObject.Methods[0].Name.Equals("loadeventhub"))
+            {
+                ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+                EventHub.LoadEventHub(inputs, required, returns, methodType, serviceObject);
+            }
+
+            #endregion Load Event Hub
+
+            #region List Event Hub
+
+            if (serviceObject.Methods[0].Name.Equals("listeventhubs"))
+            {
+                ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+                EventHub.ListEventHubs(inputs, required, returns, methodType, serviceObject);
+            }
+            #endregion List Event Hub
+
+            #region Create Event Hub
+
+            if (serviceObject.Methods[0].Name.Equals("createeventhub") || serviceObject.Methods[0].Name.Equals("createeventhubfulldetails"))
+            {
+                ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+                EventHub.CreateEventHubs(inputs, required, returns, methodType, serviceObject);
+            }
+
+            #endregion Create Event Hub
+
+            #region Delete Event Hub
+
+            if (serviceObject.Methods[0].Name.Equals("deleteeventhub"))
+            {
+                ASBEventHub EventHub = new ASBEventHub(serviceBroker);
+                EventHub.DeleteEventHubs(inputs, required, returns, methodType, serviceObject);
+            }
+
+            #endregion Delete Event Hub
+
+
+            #endregion Event Hub
+
 
             #region Send Message
 

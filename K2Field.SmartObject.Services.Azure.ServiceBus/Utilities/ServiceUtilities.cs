@@ -78,6 +78,11 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Utilities
 
         public NamespaceManager GetNamespaceManager(long timeoutSeconds)
         {
+            if(!string.IsNullOrWhiteSpace(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString()))
+            {
+                return NamespaceManager.CreateFromConnectionString(serviceBroker.Service.ServiceConfiguration[ServiceConfigurationSettings.ConnectionString].ToString());
+            }
+
             NamespaceManagerSettings nmSettings = new NamespaceManagerSettings();
             nmSettings.TokenProvider = GetTokenProvider();
             nmSettings.OperationTimeout = GetRequestTimeout(timeoutSeconds);

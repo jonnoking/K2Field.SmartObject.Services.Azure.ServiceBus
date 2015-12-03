@@ -1,1 +1,13 @@
 C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\bin\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.exe.config
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\bin\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.exe
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\bin\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.pdb
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.csprojResolveAssemblyReference.cache
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\MainWindow.baml
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\MainWindow.g.cs
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\App.g.cs
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox_MarkupCompile.cache
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.g.resources
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.Properties.Resources.resources
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.csproj.GenerateResource.Cache
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.exe
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox\obj\x86\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.Sandbox.pdb
