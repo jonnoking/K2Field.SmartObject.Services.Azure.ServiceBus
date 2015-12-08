@@ -45,6 +45,7 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
                 MessageServiceObject.Properties.Add(prop);
             }
             MessageServiceObject.Methods.Add(CreateSendMessage(MessageProps));
+            MessageServiceObject.Methods.Add(CreateSendMessageAsString(MessageProps));
             MessageServiceObject.Methods.Add(CreateReceiveMessage(MessageProps));
             MessageServiceObject.Methods.Add(CreatePeekLockMessage(MessageProps));
             MessageServiceObject.Methods.Add(CreateReceivePeekLockMessage(MessageProps));
@@ -325,6 +326,28 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
             return SendMessage;
         }
 
+        public Method CreateSendMessageAsString(List<Property> MessageProps)
+        {
+            Method SendMessage = new Method();
+            SendMessage.Name = "sendmessageasstring";
+            SendMessage.MetaData.DisplayName = "Send Message as String";
+            SendMessage.Type = MethodType.Read;
+            foreach (Property prop in GetMessagePropertiesInput())
+            {
+                SendMessage.InputProperties.Add(prop);
+            }
+            SendMessage.Validation.RequiredProperties.Add(MessageProps.Where(p => p.Name == "path").First());
+
+            foreach (Property prop in MessageProps)
+            {
+                SendMessage.ReturnProperties.Add(prop);
+            }
+
+
+            return SendMessage;
+        }
+
+
         public Method CreateReceiveMessage(List<Property> MessageProps)
         {
             Method ReceiveMessage = new Method();
@@ -497,7 +520,15 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
                 if (inputs.Where(p => p.Name.Equals("body")).Count() > 0)
                 {
                     string msgBody = inputs.Where(p => p.Name.Equals("body")).First().Value.ToString();
-                    msg = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes(msgBody)));
+
+                    if (serviceObject.Methods[0].Name.Equals("sendmessageasstring", StringComparison.OrdinalIgnoreCase))
+                    {
+                        msg = new BrokeredMessage(msgBody);
+                    }
+                    else
+                    {
+                        msg = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes(msgBody)));
+                    }                    
                 }
                 else
                 {

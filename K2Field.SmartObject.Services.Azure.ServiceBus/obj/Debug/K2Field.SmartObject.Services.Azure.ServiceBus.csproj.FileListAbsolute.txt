@@ -8,3 +8,4 @@ C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject
 C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus\bin\Debug\Microsoft.WindowsAzure.Configuration.xml
 C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus\obj\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.dll
 C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus\obj\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.pdb
+C:\Development\K2Field.SmartObject.Services.Azure.ServiceBus\K2Field.SmartObject.Services.Azure.ServiceBus\obj\Debug\K2Field.SmartObject.Services.Azure.ServiceBus.csprojResolveAssemblyReference.cache

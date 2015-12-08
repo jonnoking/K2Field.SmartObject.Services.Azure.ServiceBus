@@ -1098,7 +1098,7 @@ namespace K2Field.SmartObject.Services.Azure.ServiceBus.Data
 
             #region Send Message
 
-            if (serviceObject.Methods[0].Name.Equals("sendmessage"))
+            if (serviceObject.Methods[0].Name.Equals("sendmessage", StringComparison.OrdinalIgnoreCase) || serviceObject.Methods[0].Name.Equals("sendmessageasstring", StringComparison.OrdinalIgnoreCase))
             {
                 ASBMessage Message = new ASBMessage(serviceBroker);
                 Message.SendMessage(inputs, required, returns, methodType, serviceObject);                
